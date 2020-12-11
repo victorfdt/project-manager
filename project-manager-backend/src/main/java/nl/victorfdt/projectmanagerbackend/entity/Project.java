@@ -1,5 +1,7 @@
 package nl.victorfdt.projectmanagerbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,15 +24,19 @@ public class Project {
     private String description;
 
     @Column(name = "start_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate startDate;
 
     @Column(name = "end_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate endDate;
 
     @Column(name = "created_at")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
     @PrePersist
