@@ -2,6 +2,7 @@ package nl.victorfdt.projectmanagerbackend.service;
 
 import nl.victorfdt.projectmanagerbackend.dao.ProjectDAO;
 import nl.victorfdt.projectmanagerbackend.entity.Project;
+import nl.victorfdt.projectmanagerbackend.exception.EntityNotFoundException;
 import nl.victorfdt.projectmanagerbackend.exception.UniqueKeyViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,15 +30,25 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project findById(Long id) {
         if (projectDAO.findById(id).isEmpty()) {
-            throw new RuntimeException(String.format("Project with id %d was not found!", id));
+            throw new EntityNotFoundException(String.format("Project with id '%d' was not found!", id));
         }
 
         return projectDAO.findById(id).get();
     }
 
     @Override
-    public void save(Project project) {
+    public Project findByIdentifier(String identifier) {
+        Project project = projectDAO.findByIdentifier(identifier.toUpperCase());
 
+        if (project == null) {
+            throw new EntityNotFoundException(String.format("It was not found a project with identifier '%s'", identifier));
+        }
+
+        return project;
+    }
+
+    @Override
+    public void save(Project project) {
         try {
             project.setIdentifier(project.getIdentifier().toUpperCase());
             projectDAO.save(project);

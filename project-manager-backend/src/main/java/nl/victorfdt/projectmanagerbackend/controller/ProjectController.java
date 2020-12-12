@@ -7,15 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/project")
 public class ProjectController {
 
     @Autowired
@@ -33,7 +30,7 @@ public class ProjectController {
      * @param result  It contains the validation results.
      * @return ResponseEntity with the result of the request.
      */
-    @PostMapping("/project")
+    @PostMapping("")
     public ResponseEntity<?> addProject(@Valid @RequestBody Project project, BindingResult result) {
         ResponseEntity<?> responseEntity = mapValidationErrorService.map(result);
 
@@ -44,4 +41,20 @@ public class ProjectController {
         projectService.save(project);
         return new ResponseEntity<>(project, HttpStatus.CREATED);
     }
+
+
+    /**
+     * Returns a Product by the given product identifier.
+     * The name of the variable at the @GetMapping and at the method's parameter MUST BE EXACTLY the same.
+     *
+     * @param identifier - The identifier from the project
+     * @return ResponseEntity with the object
+     */
+    @GetMapping("/{identifier}")
+    public ResponseEntity<?> getProductByIdentifier(@PathVariable String identifier) {
+        Project project = projectService.findByIdentifier(identifier);
+
+        return new ResponseEntity<>(project, HttpStatus.OK);
+    }
+
 }

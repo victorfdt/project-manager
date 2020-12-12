@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProjectDAO extends CrudRepository<Project, Long> {
 
+    Project findByIdentifier(String identifier);
 }

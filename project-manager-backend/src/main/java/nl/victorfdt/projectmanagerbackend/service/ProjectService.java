@@ -10,6 +10,8 @@ public interface ProjectService {
 
     Project findById(Long id);
 
+    Project findByIdentifier(String identifier);
+
     void save(Project theEmployee);
 
     void deleteById(Long id);

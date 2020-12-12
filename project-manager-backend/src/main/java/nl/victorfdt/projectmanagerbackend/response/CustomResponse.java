@@ -1,10 +1,10 @@
-package nl.victorfdt.projectmanagerbackend.handler;
+package nl.victorfdt.projectmanagerbackend.response;
 
-public class UniqueKeyViolationResponse {
+public abstract class CustomResponse {
 
     private String message;
 
-    public UniqueKeyViolationResponse(String message) {
+    public CustomResponse(String message) {
         this.message = message;
     }
 
