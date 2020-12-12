@@ -3,6 +3,8 @@ package nl.victorfdt.projectmanagerbackend.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -15,28 +17,32 @@ public class Project {
     private Long id;
 
     @Column(name = "name")
+    @NotBlank(message = "The project name is required.")
     private String name;
 
-    @Column(name = "identifier")
+    @Column(name = "identifier", updatable = false, unique = true)
+    @NotBlank(message = "The project identifier is required.")
+    @Size(min = 4, max = 5, message = "The project identifier must have 4 or 5 characters.")
     private String identifier;
 
+    @NotBlank(message = "The project description is required.")
     @Column(name = "description")
     private String description;
 
     @Column(name = "start_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     @Column(name = "end_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     @Column(name = "created_at")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
     @PrePersist
