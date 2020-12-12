@@ -2,7 +2,9 @@ package nl.victorfdt.projectmanagerbackend.service;
 
 import nl.victorfdt.projectmanagerbackend.dao.ProjectDAO;
 import nl.victorfdt.projectmanagerbackend.entity.Project;
+import nl.victorfdt.projectmanagerbackend.exception.UniqueKeyViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +37,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void save(Project project) {
-        projectDAO.save(project);
+
+        try {
+            project.setIdentifier(project.getIdentifier().toUpperCase());
+            projectDAO.save(project);
+        } catch (DataIntegrityViolationException e) {
+            throw new UniqueKeyViolationException(String.format("The given project identifier '%s' already exists.", project.getIdentifier()));
+        }
     }
 
     @Override

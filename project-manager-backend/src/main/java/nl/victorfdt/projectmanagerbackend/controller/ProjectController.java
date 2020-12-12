@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +30,7 @@ public class ProjectController {
      * The BindingResult checks the validation and returns the errors.
      *
      * @param project The provided project
-     * @param result It contains the validation results.
+     * @param result  It contains the validation results.
      * @return ResponseEntity with the result of the request.
      */
     @PostMapping("/project")
@@ -38,7 +40,7 @@ public class ProjectController {
         if (responseEntity != null) {
             return responseEntity;
         }
-        
+
         projectService.save(project);
         return new ResponseEntity<>(project, HttpStatus.CREATED);
     }
