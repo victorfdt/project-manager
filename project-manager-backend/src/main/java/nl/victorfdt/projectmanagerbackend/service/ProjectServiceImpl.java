@@ -21,7 +21,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> findAll() {
 
-        // Convert Iterator to List.
+        // Convert Iterable to List.
         return StreamSupport
                 .stream(projectDAO.findAll().spliterator(), false)
                 .collect(Collectors.toList());
