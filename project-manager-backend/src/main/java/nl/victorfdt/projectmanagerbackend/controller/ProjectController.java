@@ -42,7 +42,6 @@ public class ProjectController {
         return new ResponseEntity<>(project, HttpStatus.CREATED);
     }
 
-
     /**
      * Returns a Product by the given product identifier.
      * The name of the variable at the @GetMapping and at the method's parameter MUST BE EXACTLY the same.
@@ -57,4 +56,10 @@ public class ProjectController {
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
+    @GetMapping("all")
+    public ResponseEntity<?> getAllProducts(){
+        var listProducts = projectService.findAll();
+
+        return new ResponseEntity<>(listProducts, HttpStatus.CREATED);
+    }
 }
