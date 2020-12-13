@@ -61,4 +61,15 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteById(Long id) {
         projectDAO.deleteById(id);
     }
+
+    @Override
+    public void deleteByIdentifier(String identifier) {
+        Project project = projectDAO.findByIdentifier(identifier);
+
+        if (project == null) {
+            throw new EntityNotFoundException(String.format("There is not project with identifier '%s'", identifier));
+        }
+
+        projectDAO.delete(project);
+    }
 }

@@ -31,7 +31,7 @@ public class ProjectController {
      * @return ResponseEntity with the result of the request.
      */
     @PostMapping("")
-    public ResponseEntity<?> addProject(@Valid @RequestBody Project project, BindingResult result) {
+    public ResponseEntity<?> add(@Valid @RequestBody Project project, BindingResult result) {
         ResponseEntity<?> responseEntity = mapValidationErrorService.map(result);
 
         if (responseEntity != null) {
@@ -51,10 +51,14 @@ public class ProjectController {
      * @return ResponseEntity with the object
      */
     @GetMapping("/{identifier}")
-    public ResponseEntity<?> getProductByIdentifier(@PathVariable String identifier) {
+    public ResponseEntity<?> getByIdentifier(@PathVariable String identifier) {
         Project project = projectService.findByIdentifier(identifier);
-
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{identifier}")
+    public ResponseEntity<?> deleteByIdentifier(@PathVariable String identifier) {
+        projectService.deleteByIdentifier(identifier);
+        return new ResponseEntity<>(String.format("The project with identifier '%s' was deleted", identifier), HttpStatus.OK);
+    }
 }

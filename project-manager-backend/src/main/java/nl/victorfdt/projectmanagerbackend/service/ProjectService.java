@@ -16,4 +16,6 @@ public interface ProjectService {
 
     void deleteById(Long id);
 
+    void deleteByIdentifier(String identifier);
+
 }
