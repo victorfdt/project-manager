@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectDAO.findByIdentifier(identifier.toUpperCase());
 
         if (project == null) {
-            throw new EntityNotFoundException(String.format("It was not found a project with identifier '%s'", identifier));
+            throw new EntityNotFoundException(String.format("It was not found a project with identifier '%s'", identifier.toUpperCase()));
         }
 
         return project;
@@ -50,10 +50,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void save(Project project) {
         try {
-            project.setIdentifier(project.getIdentifier().toUpperCase());
             projectDAO.save(project);
         } catch (DataIntegrityViolationException e) {
-            throw new UniqueKeyViolationException(String.format("The given project identifier '%s' already exists.", project.getIdentifier()));
+            throw new UniqueKeyViolationException(String.format("The given project identifier '%s' already exists.", project.getIdentifier().toUpperCase()));
         }
     }
 
@@ -64,10 +63,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteByIdentifier(String identifier) {
-        Project project = projectDAO.findByIdentifier(identifier);
+        Project project = projectDAO.findByIdentifier(identifier.toUpperCase());
 
         if (project == null) {
-            throw new EntityNotFoundException(String.format("There is not project with identifier '%s'", identifier));
+            throw new EntityNotFoundException(String.format("There is not project with identifier '%s'", identifier.toUpperCase()));
         }
 
         projectDAO.delete(project);

@@ -48,11 +48,13 @@ public class Project {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
+        this.identifier = this.identifier.toUpperCase();
     }
-
+    
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
+        this.identifier = this.identifier.toUpperCase();
     }
 
     public Long getId() {
