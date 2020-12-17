@@ -12,7 +12,9 @@ public interface ProjectService {
 
     Project findByIdentifier(String identifier);
 
-    void save(Project theEmployee);
+    void add(Project project);
+
+    void update(Project project);
 
     void deleteById(Long id);
 

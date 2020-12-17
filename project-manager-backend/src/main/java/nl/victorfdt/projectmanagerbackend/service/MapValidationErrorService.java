@@ -10,6 +10,12 @@ import java.util.HashMap;
 @Service
 public class MapValidationErrorService {
 
+    /**
+     * It creates a ResponseEntity containing a map with the validation errors.
+     * If the returned object is null, so there are no errors.
+     * @param result Results of the validation
+     * @return ResnposeEntity with the validation errors or null.
+     */
     public ResponseEntity<?> map(BindingResult result) {
         if (result.hasErrors()) {
 

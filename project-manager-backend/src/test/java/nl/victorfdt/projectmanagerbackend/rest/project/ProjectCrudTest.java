@@ -1,8 +1,6 @@
 package nl.victorfdt.projectmanagerbackend.rest.project;
 
 import nl.victorfdt.projectmanagerbackend.entity.Project;
-import nl.victorfdt.projectmanagerbackend.exception.EntityNotFoundException;
-import nl.victorfdt.projectmanagerbackend.exception.UniqueKeyViolationException;
 import nl.victorfdt.projectmanagerbackend.service.ProjectService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class ProjectCrudTest {
@@ -37,7 +36,7 @@ public class ProjectCrudTest {
     void createNewProjectAndSearchIt() {
         // Create a project to be persisted
         Project project = createProject(IDENTIFIER_LOWERCASE_1);
-        service.save(project);
+        service.add(project);
 
         // Retrieve the project from database and validate information
         Project projectDB = service.findByIdentifier(IDENTIFIER_LOWERCASE_1);
@@ -56,10 +55,10 @@ public class ProjectCrudTest {
     void findAllProjects() {
         // Create two projects project
         Project project1 = createProject(IDENTIFIER_LOWERCASE_2);
-        service.save(project1);
+        service.add(project1);
 
         Project project2 = createProject(IDENTIFIER_LOWERCASE_3);
-        service.save(project2);
+        service.add(project2);
 
         assertEquals(2, service.findAll().size());
     }

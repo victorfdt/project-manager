@@ -48,12 +48,22 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void save(Project project) {
+    public void add(Project project) {
         try {
             projectDAO.save(project);
         } catch (DataIntegrityViolationException e) {
             throw new UniqueKeyViolationException(String.format("The given project identifier '%s' already exists.", project.getIdentifier().toUpperCase()));
         }
+    }
+
+    @Override
+    public void update(Project project) {
+        Project projectDB = findByIdentifier(project.getIdentifier());
+
+        // Persist the createdAt information at the given project
+        project.setCreatedAt(projectDB.getCreatedAt());
+
+        projectDAO.save(project);
     }
 
     @Override

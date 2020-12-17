@@ -38,8 +38,20 @@ public class ProjectController {
             return responseEntity;
         }
 
-        projectService.save(project);
+        projectService.add(project);
         return new ResponseEntity<>(project, HttpStatus.CREATED);
+    }
+
+    @PutMapping("")
+    public ResponseEntity<?> update(@Valid @RequestBody Project project, BindingResult result) {
+        ResponseEntity<?> responseEntity = mapValidationErrorService.map(result);
+
+        if (responseEntity != null) {
+            return responseEntity;
+        }
+
+        projectService.update(project);
+        return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
     /**
@@ -62,7 +74,7 @@ public class ProjectController {
     }
 
     @GetMapping("all")
-    public ResponseEntity<?> getAllProducts(){
+    public ResponseEntity<?> getAllProducts() {
         var listProducts = projectService.findAll();
 
         return new ResponseEntity<>(listProducts, HttpStatus.CREATED);
