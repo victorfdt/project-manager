@@ -1,21 +1,23 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createProject } from "../../actions/ProjectActions";
+import { getProject, updateProject } from "../../actions/ProjectActions";
+import { clearErrors } from "../../actions/ErrorActions";
 import classnames from "classnames";
 
-class CreateProjectForm extends Component {
+class UpdateProjectForm extends Component {
   constructor(props) {
     super(props);
 
-    // It is the initial state of the component
+    // Initial state
     this.state = {
+      id: "",
       name: "",
       identifier: "",
       description: "",
       startDate: "",
       endDate: "",
-      errors: {},
+      errors: [],
     };
 
     // Bind the onChange
@@ -23,17 +25,6 @@ class CreateProjectForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  // Life Cycle Hooks
-  // I will call this method when the props change.
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
-
-  /**
-   * It is not possible to change the state directly, so I need to set a new state.
-   */
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -42,6 +33,7 @@ class CreateProjectForm extends Component {
     e.preventDefault();
 
     const newProject = {
+      id: this.state.id,
       name: this.state.name,
       identifier: this.state.identifier,
       description: this.state.description,
@@ -49,7 +41,41 @@ class CreateProjectForm extends Component {
       endDate: this.state.endDate,
     };
 
-    this.props.createProject(newProject, this.props.history);
+    this.props.updateProject(newProject, this.props.history);
+  }
+
+  componentDidMount() {
+    // Get the id that was passed by param
+    const { identifier } = this.props.match.params;
+
+    this.props.clearErrors();
+
+    // Make the request to get the project
+    this.props.getProject(identifier, this.props.history);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+
+    const {
+      id,
+      name,
+      identifier,
+      description,
+      startDate,
+      endDate,
+    } = nextProps.project;
+
+    this.setState({
+      id,
+      name,
+      identifier,
+      description,
+      startDate,
+      endDate,
+    });
   }
 
   render() {
@@ -59,7 +85,7 @@ class CreateProjectForm extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h5 className="display-4 text-center">Create Project</h5>
+              <h5 className="display-4 text-center">Update Project</h5>
               <hr />
               <form onSubmit={this.onSubmit}>
                 {/** Project name */}
@@ -84,6 +110,7 @@ class CreateProjectForm extends Component {
                 <div className="form-group">
                   <input
                     type="text"
+                    disabled
                     className={classnames("form-control form-control-lg", {
                       "is-invalid": errors.identifier || errors.message,
                     })}
@@ -153,16 +180,19 @@ class CreateProjectForm extends Component {
   }
 }
 
-// It states that those function are required for this component to work properly
-CreateProjectForm.propTypes = {
-  createProject: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-};
-
-//It maps the data from the state, which is handled by redux, into the props of the container
 const mapStateToProps = (state) => ({
+  project: state.projectReducer.project,
+  getProject: state.getProject,
   errors: state.errors,
 });
 
-// It maps the action's methods and make them available at the props
-export default connect(mapStateToProps, { createProject })(CreateProjectForm);
+UpdateProjectForm.propTypes = {
+  getProject: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+
+export default connect(mapStateToProps, {
+  getProject,
+  updateProject,
+  clearErrors,
+})(UpdateProjectForm);

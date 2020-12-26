@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import CreateProjectForm from "./components/project/CreateProjectForm";
 import { Provider } from "react-redux";
 import Store from "./store";
+import MainPage from "./components/layout/MainPage";
+import UpdateProjectForm from "./components/project/UpdateProjectForm";
 
 function App() {
   return (
@@ -13,8 +15,14 @@ function App() {
       <Router>
         <div className="App">
           <Header />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/addProject" component={CreateProjectForm} />
+          <Route exact path="/" component={MainPage} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/addProject" component={CreateProjectForm} />
+          <Route
+            exact
+            path="/updateProject/:identifier"
+            component={UpdateProjectForm}
+          />
         </div>
       </Router>
     </Provider>
