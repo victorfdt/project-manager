@@ -63,7 +63,11 @@ public class ProjectServiceImpl implements ProjectService {
         // Persist the createdAt information at the given project
         project.setCreatedAt(projectDB.getCreatedAt());
 
-        projectDAO.save(project);
+        try {
+            projectDAO.save(project);
+        } catch (DataIntegrityViolationException e) {
+            throw new UniqueKeyViolationException(String.format("The given project identifier '%s' doest not exist.", project.getIdentifier().toUpperCase()));
+        }
     }
 
     @Override
