@@ -47,7 +47,11 @@ class Dashboard extends Component {
               <br />
               <hr />
               {projects.map((project) => (
-                <ProjectItem key={project.id} project={project} />
+                <ProjectItem
+                  key={project.id}
+                  project={project}
+                  showDeleteModal={this.handleShowDeleteModal}
+                />
               ))}
               {projects.length == 0 && (
                 <div className="alert alert-info">There are no projects.</div>
