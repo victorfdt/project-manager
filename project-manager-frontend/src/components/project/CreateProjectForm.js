@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProject } from "../../actions/ProjectActions";
+import { clearErrors } from "../../actions/ErrorActions";
 import classnames from "classnames";
 
 class CreateProjectForm extends Component {
@@ -24,11 +25,19 @@ class CreateProjectForm extends Component {
   }
 
   // Life Cycle Hooks
-  // I will call this method when the props change.
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+  // It is called when the props changes.
+  static getDerivedStateFromProps(props, state) {
+    if (props.errors !== state.errors) {
+      return {
+        errors: props.errors,
+      };
     }
+
+    return null;
+  }
+
+  componentDidMount() {
+    this.props.clearErrors();
   }
 
   /**
@@ -156,6 +165,7 @@ class CreateProjectForm extends Component {
 // It states that those function are required for this component to work properly
 CreateProjectForm.propTypes = {
   createProject: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
 };
 
@@ -165,4 +175,6 @@ const mapStateToProps = (state) => ({
 });
 
 // It maps the action's methods and make them available at the props
-export default connect(mapStateToProps, { createProject })(CreateProjectForm);
+export default connect(mapStateToProps, { createProject, clearErrors })(
+  CreateProjectForm
+);

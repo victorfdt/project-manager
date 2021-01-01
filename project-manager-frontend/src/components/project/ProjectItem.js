@@ -19,7 +19,6 @@ class ProjectItem extends Component {
   };
 
   handleHideDeleteModal = () => {
-    alert("hide");
     this.setState({
       showDeleteModal: false,
     });
