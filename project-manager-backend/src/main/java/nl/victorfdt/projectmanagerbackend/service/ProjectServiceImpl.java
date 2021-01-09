@@ -29,11 +29,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project findById(Long id) {
-        if (projectDAO.findById(id).isEmpty()) {
-            throw new EntityNotFoundException(String.format("Project with id '%d' was not found!", id));
-        }
-
-        return projectDAO.findById(id).get();
+        return projectDAO.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("Project with id '%d' was not found!", id))
+        );
     }
 
     @Override

@@ -8,8 +8,9 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "projects")
+
+@Entity // It represents a table from the Database
+@Table(name = "projects") // It specifies the name of the table
 public class Project {
 
     @Id
