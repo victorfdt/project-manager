@@ -1,6 +1,8 @@
 package nl.victorfdt.projectmanagerbackend.rest.project;
 
+import nl.victorfdt.projectmanagerbackend.dao.ProjectDAO;
 import nl.victorfdt.projectmanagerbackend.data.entity.Project;
+import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
 import nl.victorfdt.projectmanagerbackend.service.ProjectService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ public class ProjectCrudTest {
 
     @Autowired
     private ProjectService service;
+    private ProjectDAO projectDAO;
 
 
     private static final String IDENTIFIER_LOWERCASE_1 = "jira1";
@@ -35,11 +38,11 @@ public class ProjectCrudTest {
     @Test
     void createNewProjectAndSearchIt() {
         // Create a project to be persisted
-        Project project = createProject(IDENTIFIER_LOWERCASE_1);
-        service.add(project);
+        ProjectVO projectVO = createProject(IDENTIFIER_LOWERCASE_1);
+        service.add(projectVO);
 
         // Retrieve the project from database and validate information
-        Project projectDB = service.findByIdentifier(IDENTIFIER_LOWERCASE_1);
+        ProjectVO projectDB = service.findByIdentifier(IDENTIFIER_LOWERCASE_1);
         assertEquals(NAME, projectDB.getName());
         assertEquals(IDENTIFIER_UPPERCASE_1, projectDB.getIdentifier());
         assertEquals(DESCRIPTION, projectDB.getDescription());
@@ -47,31 +50,31 @@ public class ProjectCrudTest {
         assertEquals(END_DATE, projectDB.getEndDate());
 
         // Check if the project was created today
-        assertTrue(projectDB.getCreatedAt().toLocalDate().isEqual(LocalDate.now()));
+        assertTrue(projectDAO.findByIdentifier(projectDB.getIdentifier()).getCreatedAt().toLocalDate().isEqual(LocalDate.now()));
     }
 
     @DisplayName("Find all projects")
     @Test
     void findAllProjects() {
         // Create two projects project
-        Project project1 = createProject(IDENTIFIER_LOWERCASE_2);
-        service.add(project1);
+        ProjectVO projectVO1 = createProject(IDENTIFIER_LOWERCASE_2);
+        service.add(projectVO1);
 
-        Project project2 = createProject(IDENTIFIER_LOWERCASE_3);
+        ProjectVO project2 = createProject(IDENTIFIER_LOWERCASE_3);
         service.add(project2);
 
         assertEquals(2, service.findAll().size());
     }
 
-    private Project createProject(String identifier) {
-        Project project = new Project();
-        project.setName(NAME);
-        project.setIdentifier(identifier);
-        project.setDescription(DESCRIPTION);
-        project.setStartDate(START_DATE);
-        project.setEndDate(END_DATE);
+    private ProjectVO createProject(String identifier) {
+        ProjectVO projectVO = new ProjectVO();
+        projectVO.setName(NAME);
+        projectVO.setIdentifier(identifier);
+        projectVO.setDescription(DESCRIPTION);
+        projectVO.setStartDate(START_DATE);
+        projectVO.setEndDate(END_DATE);
 
-        return project;
+        return projectVO;
     }
 
 }

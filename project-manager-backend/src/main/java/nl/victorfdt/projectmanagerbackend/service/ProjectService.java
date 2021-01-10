@@ -1,20 +1,18 @@
 package nl.victorfdt.projectmanagerbackend.service;
 
-import nl.victorfdt.projectmanagerbackend.data.entity.Project;
+import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
 
 import java.util.List;
 
 public interface ProjectService {
 
-    List<Project> findAll();
+    List<ProjectVO> findAll();
 
-    Project findById(Long id);
+    ProjectVO findByIdentifier(String identifier);
 
-    Project findByIdentifier(String identifier);
+    void add(ProjectVO project);
 
-    void add(Project project);
-
-    void update(Project project);
+    void update(ProjectVO project);
 
     void deleteById(Long id);
 

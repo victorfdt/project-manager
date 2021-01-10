@@ -1,15 +1,16 @@
 package nl.victorfdt.projectmanagerbackend.controller;
 
+import nl.victorfdt.projectmanagerbackend.converter.DozerConverter;
 import nl.victorfdt.projectmanagerbackend.data.entity.Project;
+import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
 import nl.victorfdt.projectmanagerbackend.service.MapValidationErrorService;
 import nl.victorfdt.projectmanagerbackend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/project")
@@ -22,37 +23,45 @@ public class ProjectController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    @Autowired
+    Validator validator;
+
     /**
      * Adds a new project.
      * The @Valid annotations returns the result of the validation that was defined at the entity.
      * The BindingResult checks the validation and returns the errors.
      *
-     * @param project The provided project
-     * @param result  It contains the validation results.
+     * @param projectVO The provided project
+     * @param result    It contains the validation results.
      * @return ResponseEntity with the result of the request.
      */
     @PostMapping("")
-    public ResponseEntity<?> add(@Valid @RequestBody Project project, BindingResult result) {
+    public ResponseEntity<?> add(@RequestBody ProjectVO projectVO, BindingResult result) {
+        // Because I receive a VO and not the Entity, it requires to call the Validation manually.
+        validator.validate(DozerConverter.parse(projectVO, Project.class), result);
+
         ResponseEntity<?> responseEntity = mapValidationErrorService.map(result);
 
         if (responseEntity != null) {
             return responseEntity;
         }
 
-        projectService.add(project);
-        return new ResponseEntity<>(project, HttpStatus.CREATED);
+        projectService.add(projectVO);
+        return new ResponseEntity<>(projectVO, HttpStatus.CREATED);
     }
 
     @PutMapping("")
-    public ResponseEntity<?> update(@Valid @RequestBody Project project, BindingResult result) {
+    public ResponseEntity<?> update(@RequestBody ProjectVO projectVO, BindingResult result) {
+        // Because I receive a VO and not the Entity, it requires to call the Validation manually.
+        validator.validate(DozerConverter.parse(projectVO, Project.class), result);
         ResponseEntity<?> responseEntity = mapValidationErrorService.map(result);
 
         if (responseEntity != null) {
             return responseEntity;
         }
 
-        projectService.update(project);
-        return new ResponseEntity<>(project, HttpStatus.OK);
+        projectService.update(projectVO);
+        return new ResponseEntity<>(projectVO, HttpStatus.OK);
     }
 
     /**
@@ -64,8 +73,8 @@ public class ProjectController {
      */
     @GetMapping("/{identifier}")
     public ResponseEntity<?> getByIdentifier(@PathVariable String identifier) {
-        Project project = projectService.findByIdentifier(identifier);
-        return new ResponseEntity<>(project, HttpStatus.OK);
+        ProjectVO projectVO = projectService.findByIdentifier(identifier);
+        return new ResponseEntity<>(projectVO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{identifier}")

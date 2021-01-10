@@ -1,24 +1,14 @@
 package nl.victorfdt.projectmanagerbackend.data.vo;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class ProjectVO {
 
-    private Long id;
     private String name;
     private String identifier;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -64,12 +54,23 @@ public class ProjectVO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         ProjectVO projectVO = (ProjectVO) o;
-        return Objects.equals(id, projectVO.id) && Objects.equals(name, projectVO.name) && Objects.equals(identifier, projectVO.identifier) && Objects.equals(description, projectVO.description) && Objects.equals(startDate, projectVO.startDate) && Objects.equals(endDate, projectVO.endDate);
+
+        if (!name.equals(projectVO.name)) return false;
+        if (!identifier.equals(projectVO.identifier)) return false;
+        if (!description.equals(projectVO.description)) return false;
+        if (!startDate.equals(projectVO.startDate)) return false;
+        return endDate.equals(projectVO.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, identifier, description, startDate, endDate);
+        int result = name.hashCode();
+        result = 31 * result + identifier.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + startDate.hashCode();
+        result = 31 * result + endDate.hashCode();
+        return result;
     }
 }
