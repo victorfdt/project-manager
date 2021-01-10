@@ -1,6 +1,6 @@
 package nl.victorfdt.projectmanagerbackend.rest.project;
 
-import nl.victorfdt.projectmanagerbackend.entity.Project;
+import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import nl.victorfdt.projectmanagerbackend.service.ProjectService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

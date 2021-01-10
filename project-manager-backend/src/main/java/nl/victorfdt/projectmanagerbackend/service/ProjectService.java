@@ -1,6 +1,6 @@
 package nl.victorfdt.projectmanagerbackend.service;
 
-import nl.victorfdt.projectmanagerbackend.entity.Project;
+import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 
 import java.util.List;
 

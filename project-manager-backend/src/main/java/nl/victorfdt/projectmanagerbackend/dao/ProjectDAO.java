@@ -1,6 +1,6 @@
 package nl.victorfdt.projectmanagerbackend.dao;
 
-import nl.victorfdt.projectmanagerbackend.entity.Project;
+import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

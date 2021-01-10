@@ -1,4 +1,4 @@
-package nl.victorfdt.projectmanagerbackend.entity;
+package nl.victorfdt.projectmanagerbackend.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

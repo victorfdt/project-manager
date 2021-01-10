@@ -1,7 +1,7 @@
 package nl.victorfdt.projectmanagerbackend.service;
 
 import nl.victorfdt.projectmanagerbackend.dao.ProjectDAO;
-import nl.victorfdt.projectmanagerbackend.entity.Project;
+import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import nl.victorfdt.projectmanagerbackend.exception.EntityNotFoundException;
 import nl.victorfdt.projectmanagerbackend.exception.UniqueKeyViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
