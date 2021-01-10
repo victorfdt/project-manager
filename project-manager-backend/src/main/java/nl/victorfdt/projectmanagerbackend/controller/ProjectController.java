@@ -1,6 +1,6 @@
 package nl.victorfdt.projectmanagerbackend.controller;
 
-import nl.victorfdt.projectmanagerbackend.entity.Project;
+import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import nl.victorfdt.projectmanagerbackend.service.MapValidationErrorService;
 import nl.victorfdt.projectmanagerbackend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
