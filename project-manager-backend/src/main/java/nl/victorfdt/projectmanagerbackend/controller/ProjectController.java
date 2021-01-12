@@ -13,7 +13,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/project")
+@RequestMapping("/api/project/v1")
 @CrossOrigin
 public class ProjectController {
 
@@ -71,13 +71,13 @@ public class ProjectController {
      * @param identifier - The identifier from the project
      * @return ResponseEntity with the object
      */
-    @GetMapping("/{identifier}")
+    @GetMapping("{identifier}")
     public ResponseEntity<?> getByIdentifier(@PathVariable String identifier) {
         ProjectVO projectVO = projectService.findByIdentifier(identifier);
         return new ResponseEntity<>(projectVO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{identifier}")
+    @DeleteMapping("{identifier}")
     public ResponseEntity<?> deleteByIdentifier(@PathVariable String identifier) {
         projectService.deleteByIdentifier(identifier);
         return new ResponseEntity<>(String.format("The project with identifier '%s' was deleted", identifier.toUpperCase()), HttpStatus.OK);
