@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 
 @Entity // It represents a table from the Database
-@Table(name = "projects") // It specifies the name of the table
+@Table(name = "project") // It specifies the name of the table
 public class Project {
 
     @Id

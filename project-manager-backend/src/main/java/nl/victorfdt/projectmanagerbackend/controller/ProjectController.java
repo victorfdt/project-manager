@@ -1,11 +1,14 @@
 package nl.victorfdt.projectmanagerbackend.controller;
 
+import javax.validation.Valid;
+
 import nl.victorfdt.projectmanagerbackend.converter.DozerConverter;
 import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
 import nl.victorfdt.projectmanagerbackend.service.MapValidationErrorService;
 import nl.victorfdt.projectmanagerbackend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -23,6 +26,7 @@ public class ProjectController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    @Qualifier("mvcValidator")
     @Autowired
     Validator validator;
 
