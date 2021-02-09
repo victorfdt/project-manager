@@ -1,13 +1,21 @@
 package nl.victorfdt.projectmanagerbackend.data.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.time.LocalDate;
 
+@JsonPropertyOrder({"identifier", "name", "description", "startDate", "endDate"})
 public class ProjectVO {
 
     private String name;
     private String identifier;
     private String description;
+
+    @JsonProperty("start_date")
     private LocalDate startDate;
+
+    @JsonProperty("end_date")
     private LocalDate endDate;
 
     public String getName() {
