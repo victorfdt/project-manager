@@ -2,11 +2,12 @@ package nl.victorfdt.projectmanagerbackend.data.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 
 @JsonPropertyOrder({"identifier", "name", "description", "startDate", "endDate"})
-public class ProjectVO {
+public class ProjectVO extends RepresentationModel<ProjectVO> {
 
     private String name;
     private String identifier;
