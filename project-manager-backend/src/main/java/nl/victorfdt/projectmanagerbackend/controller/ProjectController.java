@@ -1,7 +1,5 @@
 package nl.victorfdt.projectmanagerbackend.controller;
 
-import javax.validation.Valid;
-
 import nl.victorfdt.projectmanagerbackend.converter.DozerConverter;
 import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
@@ -14,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/project/v1")
@@ -51,6 +52,10 @@ public class ProjectController {
         }
 
         projectService.add(projectVO);
+
+        // HATEOAS - Adding a link in the response
+        projectVO.add(linkTo(ProjectController.class).slash(projectVO.getIdentifier()).withSelfRel());
+
         return new ResponseEntity<>(projectVO, HttpStatus.CREATED);
     }
 
@@ -65,6 +70,8 @@ public class ProjectController {
         }
 
         projectService.update(projectVO);
+        projectVO.add(linkTo(ProjectController.class).slash(projectVO.getIdentifier()).withSelfRel());
+
         return new ResponseEntity<>(projectVO, HttpStatus.OK);
     }
 
@@ -78,6 +85,8 @@ public class ProjectController {
     @GetMapping("{identifier}")
     public ResponseEntity<?> getByIdentifier(@PathVariable String identifier) {
         ProjectVO projectVO = projectService.findByIdentifier(identifier);
+        projectVO.add(linkTo(ProjectController.class).slash(projectVO.getIdentifier()).withSelfRel());
+
         return new ResponseEntity<>(projectVO, HttpStatus.OK);
     }
 
@@ -90,7 +99,7 @@ public class ProjectController {
     @GetMapping("all")
     public ResponseEntity<?> getAllProducts() {
         var listProducts = projectService.findAll();
-
+        listProducts.forEach(vo -> vo.add(linkTo(methodOn(ProjectController.class).getByIdentifier(vo.getIdentifier())).withSelfRel()));
         return new ResponseEntity<>(listProducts, HttpStatus.CREATED);
     }
 }
