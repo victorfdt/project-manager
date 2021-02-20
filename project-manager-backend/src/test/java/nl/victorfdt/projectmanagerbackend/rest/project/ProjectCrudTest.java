@@ -4,6 +4,7 @@ import nl.victorfdt.projectmanagerbackend.dao.ProjectDAO;
 import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
 import nl.victorfdt.projectmanagerbackend.service.ProjectService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class ProjectCrudTest {
 
     @DisplayName("Create a project and search it")
     @Test
+    @Disabled
     void createNewProjectAndSearchIt() {
         // Create a project to be persisted
         ProjectVO projectVO = createProject(IDENTIFIER_LOWERCASE_1);
@@ -55,6 +57,7 @@ public class ProjectCrudTest {
 
     @DisplayName("Find all projects")
     @Test
+    @Disabled
     void findAllProjects() {
         // Create two projects project
         ProjectVO projectVO1 = createProject(IDENTIFIER_LOWERCASE_2);
