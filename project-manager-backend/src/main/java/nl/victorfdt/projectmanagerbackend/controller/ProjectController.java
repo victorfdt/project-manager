@@ -1,5 +1,7 @@
 package nl.victorfdt.projectmanagerbackend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.victorfdt.projectmanagerbackend.converter.DozerConverter;
 import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Tag(name = "Project", description = "API from the Project")
 @RestController
 @RequestMapping("/api/project/v1")
 @CrossOrigin
@@ -40,6 +43,7 @@ public class ProjectController {
      * @param result    It contains the validation results.
      * @return ResponseEntity with the result of the request.
      */
+    @Operation(method = "Test", description = "Add a new Project")
     @PostMapping("")
     public ResponseEntity<?> add(@RequestBody ProjectVO projectVO, BindingResult result) {
         // Because I receive a VO and not the Entity, it requires to call the Validation manually.

@@ -10,7 +10,7 @@
     </parent>
     <groupId>nl.victorfdt</groupId>
     <artifactId>project-manager-backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>project-manager-backend</name>
     <description>Spring Boot application for managing projects.</description>
 
