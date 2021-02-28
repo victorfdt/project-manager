@@ -1,0 +1,1 @@
+INSERT INTO user (user_name, full_name, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) VALUES ('victor', 'Victor Di Trani', '123', 1, 1, 1, 1);

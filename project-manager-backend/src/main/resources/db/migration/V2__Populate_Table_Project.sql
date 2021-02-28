@@ -1,5 +1,5 @@
 -- MySQL
-INSERT INTO project (ID, DESCRIPTION, IDENTIFIER, NAME, START_DATE, END_DATE)
+INSERT INTO project (id, description, identifier, name, start_date, end_date)
 VALUES (1,'JIRA DESCRIPTION', 'JIRA1', ' PROJECT 1', '2021-01-01', '2022-01-01');
 
 -- H2 Database

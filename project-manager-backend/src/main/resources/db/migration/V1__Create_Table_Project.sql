@@ -1,15 +1,15 @@
 -- MySQL
 CREATE TABLE IF NOT EXISTS project
 (
-    ID          BIGINT(19) NOT NULL AUTO_INCREMENT,
-    CREATED_AT  TIMESTAMP,
-    DESCRIPTION VARCHAR(255),
-    END_DATE    DATE,
-    IDENTIFIER  VARCHAR(5) UNIQUE,
-    NAME        VARCHAR(255),
-    START_DATE  DATE,
-    UPDATED_AT  TIMESTAMP,
-    PRIMARY KEY (ID)
+    id          BIGINT(19) NOT NULL AUTO_INCREMENT,
+    created_at  TIMESTAMP,
+    description VARCHAR(255),
+    end_date    DATE,
+    identifier  VARCHAR(5) UNIQUE,
+    name        VARCHAR(255),
+    start_date  DATE,
+    updated_at  TIMESTAMP,
+    PRIMARY KEY (id)
 );
 
 -- H2
