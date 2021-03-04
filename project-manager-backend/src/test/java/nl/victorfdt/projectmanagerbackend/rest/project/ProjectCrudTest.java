@@ -1,7 +1,6 @@
 package nl.victorfdt.projectmanagerbackend.rest.project;
 
-import nl.victorfdt.projectmanagerbackend.dao.ProjectDAO;
-import nl.victorfdt.projectmanagerbackend.data.entity.Project;
+import nl.victorfdt.projectmanagerbackend.repository.ProjectRepository;
 import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
 import nl.victorfdt.projectmanagerbackend.service.ProjectService;
 import org.junit.jupiter.api.Disabled;
@@ -20,7 +19,7 @@ public class ProjectCrudTest {
 
     @Autowired
     private ProjectService service;
-    private ProjectDAO projectDAO;
+    private ProjectRepository projectRepository;
 
 
     private static final String IDENTIFIER_LOWERCASE_1 = "jira1";
@@ -52,7 +51,7 @@ public class ProjectCrudTest {
         assertEquals(END_DATE, projectDB.getEndDate());
 
         // Check if the project was created today
-        assertTrue(projectDAO.findByIdentifier(projectDB.getIdentifier()).getCreatedAt().toLocalDate().isEqual(LocalDate.now()));
+        assertTrue(projectRepository.findByIdentifier(projectDB.getIdentifier()).getCreatedAt().toLocalDate().isEqual(LocalDate.now()));
     }
 
     @DisplayName("Find all projects")

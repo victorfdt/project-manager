@@ -1,7 +1,7 @@
 package nl.victorfdt.projectmanagerbackend.service;
 
 import nl.victorfdt.projectmanagerbackend.converter.DozerConverter;
-import nl.victorfdt.projectmanagerbackend.dao.ProjectDAO;
+import nl.victorfdt.projectmanagerbackend.repository.ProjectRepository;
 import nl.victorfdt.projectmanagerbackend.data.entity.Project;
 import nl.victorfdt.projectmanagerbackend.data.vo.ProjectVO;
 import nl.victorfdt.projectmanagerbackend.exception.EntityNotFoundException;
@@ -16,10 +16,10 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
-    private ProjectDAO projectDAO;
+    private ProjectRepository projectRepository;
 
     public List<ProjectVO> findAll() {
-        return DozerConverter.parse(projectDAO.findAll(), ProjectVO.class);
+        return DozerConverter.parse(projectRepository.findAll(), ProjectVO.class);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void add(ProjectVO projectVO) {
         try {
-            projectDAO.save(DozerConverter.parse(projectVO, Project.class));
+            projectRepository.save(DozerConverter.parse(projectVO, Project.class));
         } catch (DataIntegrityViolationException e) {
             throw new UniqueKeyViolationException(String.format("The given project identifier '%s' already exists.", projectVO.getIdentifier().toUpperCase()));
         }
@@ -47,7 +47,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectToSave.setId(projectDB.getId());
 
         try {
-            projectDAO.save(DozerConverter.parse(projectToSave, Project.class));
+            projectRepository.save(DozerConverter.parse(projectToSave, Project.class));
         } catch (DataIntegrityViolationException e) {
             throw new UniqueKeyViolationException(String.format("The given project identifier '%s' doest not exist.", projectVO.getIdentifier().toUpperCase()));
         }
@@ -55,22 +55,22 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteById(Long id) {
-        projectDAO.deleteById(id);
+        projectRepository.deleteById(id);
     }
 
     @Override
     public void deleteByIdentifier(String identifier) {
-        Project project = projectDAO.findByIdentifier(identifier.toUpperCase());
+        Project project = projectRepository.findByIdentifier(identifier.toUpperCase());
 
         if (project == null) {
             throw new EntityNotFoundException(String.format("There is not project with identifier '%s'", identifier.toUpperCase()));
         }
 
-        projectDAO.delete(project);
+        projectRepository.delete(project);
     }
 
     private Project findProjectByIdentifier(String identifier) {
-        var project = projectDAO.findByIdentifier(identifier.toUpperCase());
+        var project = projectRepository.findByIdentifier(identifier.toUpperCase());
 
         if (project == null) {
             throw new EntityNotFoundException(String.format("It was not found a project with identifier '%s'", identifier.toUpperCase()));
