@@ -16,7 +16,7 @@ public class UserServicesImpl implements UserService, UserDetailsService {
 
     @Override
     public User findUserByUserName(String userName) {
-        return null;
+        return userRepository.findByUserName(userName);
     }
 
     @Override
